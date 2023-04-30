@@ -1,0 +1,49 @@
+-- nscan controller
+os.loadAPI("p2")
+print("enter port of computer to control")
+port = tonumber(read())
+os.sleep(2)
+
+successm,botID,m = p2.init()
+
+
+keysList = {keys.w,keys.a,keys.s,keys.d,keys.t,keys.u,keys.i,keys.p,keys.n}
+
+valid = false
+ 
+while true do
+ 
+    event, key = os.pullEvent()  
+    
+    print("_")
+    
+    for i,e in ipairs(keysList) do
+        if e == key then
+            valid = true
+        end
+    end
+    
+    if valid then        
+          
+        if key == keys.p then
+            os.reboot()
+        end
+    
+        if key == keys.n then
+            print("pressed n")
+            success,msg = p2.recieve(m,botID)  
+            print(msg)
+        end
+    
+        p2.send(m,port,botID,key)
+        print(key)
+        term.scroll(1)
+        valid = false
+    end
+end
+    
+
+
+
+
+

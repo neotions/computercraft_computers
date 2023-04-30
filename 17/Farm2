@@ -1,0 +1,35 @@
+os.loadAPI("move")
+run = true
+counter = 0
+while run == true do
+    counter = counter +1
+    faceInit = true
+    if turtle.detect() then
+        turtle.forward(1)
+        turtle.inspectDown()
+    else if faceInit == true then
+        turtle.turnLeft()
+        turtle.forward()
+        turtle.turnLeft()
+        turtle.inspectDown()
+        faceInit = false
+    else if faceInit == false then
+        turtle.turnRight()
+        turtle.forward()
+        turtle.turnRight()
+        turtle.inspectDown()
+        faceInit = true
+    end
+    
+    local success, data = turtle.inspectDown()
+    if success then
+        cropAge = data.state.age
+        print(cropAge)
+    end
+ 
+    if cropAge == 7 then
+        turtle.digDown()
+        turtle.select(2)
+        turtle.placeDown()
+    end
+end

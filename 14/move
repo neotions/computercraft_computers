@@ -1,0 +1,53 @@
+
+-- helper functions for movement
+
+function forward(n)
+
+    for i = 0, n - 1 do
+        turtle.dig()
+        turtle.forward()
+    end --for
+end -- fn
+
+function right(n)
+
+    turtle.turnRight()
+    forward(n)    
+    turtle.turnLeft()
+    
+end --fn
+
+function left(n)
+
+    turtle.turnLeft()
+    forward(n)    
+    turtle.turnRight()
+
+end --fn
+
+function turn_around()
+    turtle.turnRight()
+    turtle.turnRight()
+end --fn
+
+function back(n)
+
+    turn_around()
+    forward(n)
+    turn_around()    
+
+end --fn
+
+function up(n)
+    for i = 0, n - 1 do
+        turtle.digUp()
+        turtle.up()
+    end --for
+end --fn
+
+function down(n)
+    for i = 0, n - 1 do
+        turtle.digDown()
+        turtle.down()
+    end --for
+end --fn 

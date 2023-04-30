@@ -1,0 +1,58 @@
+print("p2 responder program")
+print(" ")
+os.loadAPI("move")
+s = peripheral.find("geoScanner")
+
+
+botID = os.getComputerID()
+
+   
+m = peripheral.wrap("right")
+m.open(botID)
+    
+while true do
+    event,modemSide,senderChannel,replyChannel,message,senderDistance = os.pullEvent("modem_message")
+    --
+    cmd = keys.getName(message)
+    
+    if cmd == "f" then
+        data,reason = s.chunkAnalyze()
+        print(reason)
+        print("analyzed chunk")
+        
+        m.transmit(botID,botID,i)
+        print("transmited chunk data")
+    end
+    --
+    if cmd == "w" then
+        move.forward(1)
+    end
+    --
+    if cmd == "a" then
+        move.left(1)
+    end
+    --
+    if cmd == "s" then
+        move.back(1)
+    end
+    --
+    if cmd == "d" then
+        move.right(1)
+    end
+    --
+    if cmd == "t" then
+        move.turn_around()
+    end
+    --
+    if cmd == "u" then
+        move.up(1)
+    end
+    --
+    if cmd == "i" then
+        move.down(1)
+    end
+    
+    if cmd == "p" then
+        os.reboot()
+    end    
+end

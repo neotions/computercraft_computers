@@ -1,0 +1,22 @@
+function moveDetect()
+    blockInFront = turtle.detect()
+    if blockInFront == false then
+        turtle.forward(1)
+    end
+end
+--moveDetect()
+
+function plant()
+    local success, data = turtle.inspectDown()
+    if success then
+        cropAge = data.state.age
+        print(cropAge)
+        if cropAge == 7 then
+            turtle.digDown()
+            turtle.select(2)
+            turtle.placeDown()
+        end
+    end
+end
+
+--plant()

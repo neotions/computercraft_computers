@@ -1,0 +1,17 @@
+            turtle.down()
+            turtle.down()
+            turtle.select(1)
+            for i = 1,16 do
+                turtle.suckDown()
+            end
+            
+            turtle.up()
+            turtle.up()
+            
+            for num = 2,16 do
+                turtle.select(num)
+                turtle.drop()
+            end
+
+            turtle.turnRight()
+            faceInit = true

@@ -1,0 +1,6 @@
+run = true
+while run == true do
+    turtle.select(16)
+    turtle.refuel()
+    print(turtle.getFuelLevel())
+end

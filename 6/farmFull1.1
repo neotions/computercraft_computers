@@ -1,0 +1,48 @@
+os.loadAPI("Farm4")
+os.loadAPI("inspection.lua")
+--Loads required apis
+ 
+run = true
+faceInit = true
+--Initial run settings
+ 
+blocksToReset = 17
+--Blocks to move back to start(adjustable)
+ 
+--Main loop body
+while run == true do
+    --print(inspection.viewBlock())
+    viewedBlock = inspection.viewBlock()
+    print(viewedBlock)
+    
+    if viewedBlock == "minecraft:chest" then
+    for num = 2,16 do
+    turtle.select(num)
+    turtle.drop()
+    end
+    turtle.turnLeft()
+    for num = 1, blocksToReset do
+    turtle.forward()
+    end
+    turtle.turnLeft()
+    faceInit = true
+    os.sleep(600)
+    end
+    
+    if turtle.detect() == false then
+        Farm4.moveDetect()
+        Farm4.plant()
+    else
+        if faceInit == true then
+            turtle.turnLeft()
+            turtle.forward()
+            turtle.turnLeft()
+            faceInit = false
+        else
+            turtle.turnRight()
+            turtle.forward()
+            turtle.turnRight()
+            faceInit = true
+        end
+    end
+end

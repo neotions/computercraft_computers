@@ -1,0 +1,169 @@
+--Returns ID of block in front of turtle
+function viewBlock()
+    local success, data = turtle.inspect()
+ 
+    if success then
+        itemId = data.name
+        print(itemId)
+        return itemId
+    end
+end
+ 
+--BasicWoodcutLoop
+function cut()
+ 
+    for i = 0,6 do
+        turtle.digUp()
+        turtle.up()
+    end
+    
+    turtle.dig()
+    turtle.forward()
+    
+    for i = 0,6 do
+        turtle.digDown()
+        turtle.down()
+    end
+    
+    turtle.forward()
+    
+end
+ 
+ 
+--Basic movement loop
+function moveForward()
+ 
+    for i = 0,5 do
+        turtle.forward()
+    end
+end
+ 
+function moveAround()
+    turtle.turnRight()
+    turtle.forward()
+    turtle.turnLeft()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnLeft()
+    turtle.forward()
+    turtle.turnRight()
+end
+ 
+--Turns and plants sapling
+function plant()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.place()
+    turtle.turnLeft()
+    turtle.turnLeft()
+end
+ 
+function detectCut()
+    viewedBlock = viewBlock()
+    if viewedBlock == "minecraft:spruce_log" then
+        cut()
+    else
+        moveAround()
+    end
+ 
+end
+ 
+--Cuts entire column of trees
+function cutColumn()
+    for i = 1,treesInColumn do  
+        detectCut()
+        plant()
+        if counter < timesToMove then
+            moveForward()
+            counter = counter + 1
+        end
+    end
+    counter = 0
+end
+ 
+--Updates Faceinit value to current facing (True if facing initial direction, false if opposite)
+function updateFacing()
+    if faceInit == true then
+        faceInit = false
+        else
+        faceInit = true
+    end
+end
+ 
+--Moves between rows to cut the next one
+function moveRows()
+    if faceInit == true then
+        turtle.turnRight()
+    else
+        turtle.turnLeft()
+    end
+    moveForward()
+    if faceInit == true then
+        turtle.turnRight()
+    else
+        turtle.turnLeft()
+    end
+    updateFacing()
+ 
+ 
+end
+ 
+ 
+    
+         
+ 
+ 
+--RunTime Loop
+run = true
+faceInit = true
+treesInColumn = 6 -- UPDATE ME TO FIT SIZE OF TREE FARM
+numOfColumns = 8 -- UPDATE ME TO FIT SIZE OF TREE FARM
+timesToMove = treesInColumn - 1
+counter = 0
+blocksToReset = 42
+numberOfLoopsRun = 0
+ 
+while run == true do
+    counter = 0
+    counter2 = 0
+ 
+    for i = 1,numOfColumns do
+        cutColumn()
+        counter2 = counter2 + 1
+ 
+        if counter2 < numOfColumns then
+            moveRows()
+        else
+            print("reset")
+            print(turtle.getFuelLevel())
+            turtle.turnRight()
+            for i = 1,blocksToReset do
+                turtle.forward()
+            end
+            
+            turtle.down()
+            turtle.down()
+            turtle.select(1)
+            for i = 1,16 do
+                turtle.suckDown()
+            end
+            
+            turtle.up()
+            turtle.up()
+            
+            for num = 2,16 do
+                turtle.select(num)
+                turtle.drop()
+            end
+
+            turtle.turnRight()
+            turtle.select(1)
+            faceInit = true
+            
+        end
+    end
+    numberOfLoopsRun = numberOfLoopsRun + 1
+    print(numberOfLoopsRun)
+    sleep(150)
+   -- run = false
+end

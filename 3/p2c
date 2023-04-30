@@ -1,0 +1,56 @@
+-- nscan controller
+
+print("enter port of computer to control")
+port = tonumber(read())
+
+os.sleep(2)
+
+
+m = peripheral.wrap("back")
+m.open(port)
+
+print("opened port at:")
+print(port)
+print(" ")
+
+keysList = {keys.w,keys.a,keys.s,keys.d,keys.t,keys.u,keys.i,keys.p,keys.f}
+
+valid = false
+ 
+while true do
+
+    message = "awaiting command"
+ 
+    event, key = os.pullEvent()  
+    
+    print("event recieved")
+    
+    for i,e in ipairs(keysList) do
+        if e == key then
+            valid = true
+        end
+    end
+    
+    if valid then        
+          
+        if key == keys.p then
+            os.reboot()
+        end
+    
+        if key == keys.g then
+            e,side,port,rport,message,distance = os.pullEvent("modem_message")  
+            print(message)
+        end
+    
+        m.transmit(port,port,key)
+        print(key)
+        print(message)
+        term.scroll(1)
+        os.sleep(.25)
+        valid = false
+    end
+end
+    
+
+
+
